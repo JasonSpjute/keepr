@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="codeworks.auth0provider" Version="1.0.3" />
+    <PackageReference Include="dapper" Version="2.0.78" />
+    <PackageReference Include="microsoft.aspnetcore.authentication.jwtbearer" Version="5.0.3" />
+    <PackageReference Include="mysqlconnector" Version="1.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+</Project>
