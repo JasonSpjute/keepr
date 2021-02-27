@@ -21,15 +21,7 @@ namespace keepr.Services
             {
                 throw new Exception("Invalid Id");
             }
-            else if (userId == "nope" && data.IsPrivate == false)
-            {
-                return data;
-            }
-            else if (data.CreatorId == userId)
-            {
-                return data;
-            }
-            else if (data.IsPrivate == false)
+            else if (data.CreatorId == userId | data.IsPrivate == false)
             {
                 return data;
             }
