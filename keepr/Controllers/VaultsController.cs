@@ -13,9 +13,11 @@ namespace keepr.Controllers
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _vs;
-        public VaultsController(VaultsService vs)
+        private readonly KeepsService _ks;
+        public VaultsController(VaultsService vs, KeepsService ks)
         {
             _vs = vs;
+            _ks = ks;
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Vault>> GetAction(int id)
@@ -82,6 +84,18 @@ namespace keepr.Controllers
             {
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
                 return Ok(_vs.Delete(id, userInfo.Id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("{id}/keeps")]
+        public ActionResult<Vault> GetKeeps(int id)
+        {
+            try
+            {
+                return Ok(_ks.GetKeepsByVaultId(id));
             }
             catch (Exception e)
             {

@@ -57,5 +57,10 @@ namespace keepr.Services
         {
             return _kr.GetByCreatorId(id);
         }
+
+        internal IEnumerable<Keep> GetKeepsByVaultId(int id)
+        {
+            return _kr.GetByVaultId(id);
+        }
     }
 }

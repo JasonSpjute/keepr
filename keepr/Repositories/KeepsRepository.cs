@@ -60,6 +60,7 @@ namespace keepr.Repositories
             return editData;
         }
 
+
         internal void Remove(int id)
         {
             string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1";
@@ -75,6 +76,17 @@ namespace keepr.Repositories
             JOIN profiles profile ON keep.creatorId = profile.id
             WHERE keep.creatorId = @id;";
             return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id");
+        }
+        internal IEnumerable<KeepVaultKeepViewModel> GetByVaultId(int id)
+        {
+            string sql = @"
+                SELECT
+                keep.*,
+                vk.id as VaultKeepId
+                FROM vaultkeeps vk
+                JOIN keeps keep ON vk.keepId = keep.id
+                WHERE vaultId = @id;";
+            return _db.Query<KeepVaultKeepViewModel>(sql, new { id });
         }
     }
 }
