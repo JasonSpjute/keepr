@@ -52,5 +52,10 @@ namespace keepr.Services
             _kr.Remove(id);
             return "Successfully Deleted";
         }
+
+        internal IEnumerable<Keep> GetByCreatorId(string id)
+        {
+            return _kr.GetByCreatorId(id);
+        }
     }
 }

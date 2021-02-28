@@ -1,7 +1,7 @@
 namespace keepr.Repositories
 {
-    public class VaultKeepsRepository
+    public class VaultKeepsRepository : ControllerBase
     {
-        
+
     }
 }

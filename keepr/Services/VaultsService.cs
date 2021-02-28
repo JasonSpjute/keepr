@@ -4,6 +4,8 @@ using keepr.Models;
 using keepr.Repositories;
 using Microsoft.AspNetCore.Http;
 using CodeWorks.Auth0Provider;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace keepr.Services
 {
@@ -46,6 +48,7 @@ namespace keepr.Services
             return _vr.Edit(editData);
         }
 
+
         internal String Delete(int id, string userId)
         {
             Vault original = _vr.Get(id);
@@ -53,6 +56,18 @@ namespace keepr.Services
             if (original.CreatorId != userId) { throw new Exception("Access Denied: Cannot Edit a Vault You did not Create"); }
             _vr.Remove(id);
             return "Successfully Deleted";
+        }
+
+        internal IEnumerable<Vault> GetByCreatorId(string id, string userId)
+        {
+            if (id == userId)
+            {
+                return _vr.GetByCreatorId(id).ToList();
+            }
+            else
+            {
+                return _vr.GetByCreatorId(id).ToList().FindAll(r => r.IsPrivate == false);
+            }
         }
     }
 }
