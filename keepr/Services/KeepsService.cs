@@ -26,6 +26,8 @@ namespace keepr.Services
             {
                 throw new Exception("Invalid Id");
             }
+            data.Views++;
+            _kr.Edit(data);
             return data;
         }
 
@@ -37,10 +39,15 @@ namespace keepr.Services
 
         internal Keep Edit(Keep editData, string userId)
         {
-            Keep original = Get(editData.Id);
+            Keep original = _kr.Get(editData.Id);
             if (original.CreatorId != userId) { throw new Exception("Access Denied: Cannot Edit a Keep You did not Create"); }
             editData.Name = editData.Name == null ? original.Name : editData.Name;
             editData.Description = editData.Description == null ? original.Description : editData.Description;
+            editData.Keeps = original.Keeps;
+            editData.Views = original.Views;
+            editData.Shares = original.Shares;
+            editData.CreatorId = original.CreatorId;
+            editData.Img = original.Img;
             return _kr.Edit(editData);
         }
 

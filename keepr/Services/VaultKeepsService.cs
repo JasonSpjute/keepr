@@ -32,11 +32,14 @@ namespace keepr.Services
             {
                 throw new NotAuthorized("Not the Owner of this Vault");
             }
+            keep.Keeps++;
+            _kr.Edit(keep);
             return _repo.Create(vk);
         }
         internal void Delete(int id, string userId)
         {
             var data = _repo.GetById(id);
+            var keep = _kr.Get(data.KeepId);
             if (data == null)
             {
                 throw new Exception("Invalid Id");
@@ -45,6 +48,8 @@ namespace keepr.Services
             {
                 throw new Exception("This is not yours to delete");
             }
+            keep.Keeps--;
+            _kr.Edit(keep);
             _repo.Delete(id);
         }
     }

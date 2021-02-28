@@ -43,7 +43,7 @@ use keepr71;
 --     ON DELETE CASCADE
 -- );
 
--- CREATE TABLE vaultKeeps
+-- CREATE TABLE vaultkeeps
 -- (
 --     id INT NOT NULL AUTO_INCREMENT,
 --     creatorId VARCHAR(255) NOT NULL,
@@ -64,3 +64,5 @@ use keepr71;
 --     REFERENCES profiles (id)
 --     ON DELETE CASCADE
 -- );
+
+-- DELETE FROM vaultkeeps 
