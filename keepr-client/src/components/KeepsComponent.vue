@@ -12,7 +12,7 @@
         <a href="#" class="btn btn-primary">See Profile</a>
       </div>
     </div>
-    <div class="modal fade"
+    <div class="modal-fixed-footer modal fade"
          :id="'modal' + keepProp.id"
          tabindex="-1"
          role="dialog"
@@ -39,13 +39,31 @@
                   <h1>{{ state.keep.name }}</h1>
                 </div>
               </div>
-              <div class="row my-3">
+              <div class="row mt-3">
                 <div class="col text-center">
                   <p>{{ state.keep.description }}</p>
                 </div>
               </div>
-              <div class="row modal-footer text-center">
-                <div class="col" v-if="state.keep.creator">
+              <div class="modal-footer">
+                <div class="col text-left">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                    >
+                      Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col text-right" v-if="state.keep.creator">
                   <h6>{{ state.keep.creator.name }}</h6>
                 </div>
               </div>
