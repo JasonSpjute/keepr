@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="card-columns">
-        <KeepsComponent />
+      <div class="card-columns mx-5">
+        <KeepsComponent v-for="k in state.keeps" :key="k.id" :keep-prop="k" />
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      restaurants: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps)
     })
     onMounted(() => {
       keepsService.getKeeps()
@@ -29,12 +29,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.home{
-  text-align: center;
-  user-select: none;
-  > img{
-    height: 200px;
-    width: 200px;
-  }
+.card-columns {
+    column-count: 2;
+    @media (min-width: 992px){
+      column-count: 4;
+    }
 }
 </style>
