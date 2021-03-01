@@ -1,14 +1,16 @@
 <template>
-  <div class="card m-3" @click="modalOpen()">
-    <img class="card-img-top" :src="keepProp.img" alt="Card image">
-    <div class="card-img-overlay">
-      <h4 class="card-title">
-        {{ keepProp.name }}
-      </h4>
-      <p class="card-text">
-        {{ keepProp.description }}
-      </p>
-      <a href="#" class="btn btn-primary">See Profile</a>
+  <div>
+    <div class="card" @click="modalOpen()">
+      <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
+      <div class="card-img-overlay">
+        <h4 class="card-title">
+          {{ keepProp.name }}
+        </h4>
+        <p class="card-text">
+          {{ keepProp.description }}
+        </p>
+        <a href="#" class="btn btn-primary">See Profile</a>
+      </div>
     </div>
     <div class="modal fade"
          :id="'modal' + keepProp.id"
@@ -19,11 +21,35 @@
     >
       <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-          <div class="row">
-            <div class="col-6 p-3">
-              <img :src="keepProp.img" class="img-fluid" alt="">
+          <div class="row px-3">
+            <div class="col-6 py-3 round">
+              <img :src="state.keep.img" class="img-fluid rounded" alt="">
             </div>
-            <div class="col-6"></div>
+            <div class="col-6 py-1">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="row text-success">
+                <div class="col text-center mt-4">
+                  <p><span><i class="fas fa-eye"></i> {{ state.keep.views }} &nbsp; &nbsp; &nbsp; <b>K</b> {{ state.keep.keeps }}</span> </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  <h1>{{ state.keep.name }}</h1>
+                </div>
+              </div>
+              <div class="row my-3">
+                <div class="col text-center">
+                  <p>{{ state.keep.description }}</p>
+                </div>
+              </div>
+              <div class="row modal-footer text-center">
+                <div class="col" v-if="state.keep.creator">
+                  <h6>{{ state.keep.creator.name }}</h6>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -32,15 +58,23 @@
 </template>
 <script>
 import $ from 'jquery'
+import { keepsService } from '../services/KeepsService'
+import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 export default {
   name: 'KeepsComponent',
   props: {
     keepProp: { type: Object, required: true }
   },
   setup(props) {
+    const state = reactive({
+      keep: computed(() => AppState.activeKeep)
+    })
     return {
+      state,
       modalOpen() {
-        $('#modal' + props.keepProp.id).modal('toggle')
+        keepsService.getOne(props.keepProp.id)
+        $('#modal' + props.keepProp.id).modal('show')
       }
     }
   }
@@ -49,5 +83,9 @@ export default {
 <style lang="scss" scoped>
 .card{
   cursor: pointer;
+  border-radius: 25px;
+}
+.round-pic{
+  border-radius: 25px;
 }
 </style>
