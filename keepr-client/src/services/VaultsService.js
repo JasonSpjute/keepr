@@ -2,6 +2,11 @@ import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
 class VaultsService {
+  async getOne(id) {
+    const res = await api.get('api/vaults/' + id)
+    AppState.currentVault = res.data
+  }
+
   async getByAccount() {
     const res = await api.get('api/account/vaults')
     AppState.myVaults = res.data

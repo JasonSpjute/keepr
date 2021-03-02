@@ -75,7 +75,7 @@
                       class="creator-pic"
                       alt=""
                     >
-                    <p class="name-pic">
+                    <p class="name-pic text-dark">
                       &nbsp; {{ state.keep.creator.name }}
                     </p>
                   </router-link>

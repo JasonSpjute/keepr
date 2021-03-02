@@ -1,11 +1,15 @@
 <template>
-  <div class="card grey vault-card">
-    <div class="card-body text-white">
-      <h1>
-        {{ vaultProp.name }}
-      </h1>
+  <router-link :to="{ name: 'VaultPage', params: { id: vaultProp.id }}">
+    <div
+      class="card grey vault-card"
+    >
+      <div class="card-body text-white">
+        <h1>
+          {{ vaultProp.name }}
+        </h1>
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 <script>
 export default {

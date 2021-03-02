@@ -16,6 +16,11 @@ class KeepsService {
     const res = await api.get('api/profiles/' + id + '/keeps')
     AppState.keeps = res.data
   }
+
+  async getByVaultId(id) {
+    const res = await api.get('api/vaults/' + id + '/keeps')
+    AppState.keeps = res.data
+  }
 }
 
 export const keepsService = new KeepsService()
