@@ -23,29 +23,7 @@
       </div>
       <div class="row my-3 mx-5">
         <div class="col">
-          <h2><i class="fa fa-plus text-success" @click="state.keepForm = !state.keepForm" aria-hidden="true"></i> &nbsp; Keeps:</h2>
-        </div>
-      </div>
-      <div class="row" v-if="state.keepForm">
-        <div class="col-6 ml-5 mb-4 py-3 px-3 bg-success rounded">
-          <h5>Create a Keep!</h5>
-          <form @submit.prevent="createKeep">
-            <div class="form-group">
-              <label for="keepName">Keep Name</label>
-              <input type="string" class="form-control" id="keepName" placeholder="Enter name" v-model="state.newKeep.name">
-            </div>
-            <div class="form-group">
-              <label for="keepDescription">Keep Description</label>
-              <input type="string" class="form-control" id="keepDescription" placeholder="Enter Description" v-model="state.newKeep.description">
-            </div>
-            <div class="form-group">
-              <label for="keepPicture">Keep Image</label>
-              <input type="string" class="form-control" id="keepDescription" placeholder="Enter Image Url" v-model="state.newKeep.img">
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Submit
-            </button>
-          </form>
+          <h2><i class="fa fa-plus text-success" @click="openKeepModal" aria-hidden="true"></i> &nbsp; Keeps:</h2>
         </div>
       </div>
       <div class="row">
@@ -93,6 +71,44 @@
         </div>
       </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="keepModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Modal title
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="createKeep">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="keepName">Keep Name</label>
+                <input type="string" class="form-control" id="keepName" placeholder="Enter name" v-model="state.newKeep.name">
+              </div>
+              <div class="form-group">
+                <label for="keepDescription">Keep Description</label>
+                <input type="string" class="form-control" id="keepDescription" placeholder="Enter Description" v-model="state.newKeep.description">
+              </div>
+              <div class="form-group">
+                <label for="keepPicture">Keep Image</label>
+                <input type="string" class="form-control" id="keepDescription" placeholder="Enter Image Url" v-model="state.newKeep.img">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -126,11 +142,13 @@ export default {
       openVaultModal() {
         $('#vaultModal').modal('show')
       },
+      openKeepModal() {
+        $('#keepModal').modal('show')
+      },
       createVault() {
         try {
           vaultsService.createVault(state.newVault)
           state.newVault = {}
-          state.vaultForm = false
           $('#vaultModal').modal('hide')
         } catch (error) {
           logger.log(error)
@@ -140,7 +158,7 @@ export default {
         try {
           keepsService.createKeep(state.newKeep)
           state.newKeep = {}
-          state.keepForm = false
+          $('#keepModal').modal('hide')
         } catch (error) {
           logger.log(error)
         }
