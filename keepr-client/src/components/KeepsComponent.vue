@@ -69,10 +69,16 @@
                   <i class="fas fa-trash text-danger"></i>
                 </div>
                 <div class="col text-right" v-if="state.keep.creator">
-                  <img :src="state.keep.creator.picture" class="creator-pic" alt="">
-                  <p class="name-pic">
-                    &nbsp; {{ state.keep.creator.name }}
-                  </p>
+                  <router-link :to="{ name: 'Profile', params: {id: keepProp.creatorId} }" @click="closeModal()">
+                    <img
+                      :src="state.keep.creator.picture"
+                      class="creator-pic"
+                      alt=""
+                    >
+                    <p class="name-pic">
+                      &nbsp; {{ state.keep.creator.name }}
+                    </p>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -87,7 +93,6 @@ import $ from 'jquery'
 import { keepsService } from '../services/KeepsService'
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
-import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'KeepsComponent',
   props: {
@@ -97,14 +102,16 @@ export default {
     const state = reactive({
       keep: computed(() => AppState.activeKeep),
       user: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults)
+      vaults: computed(() => AppState.myVaults)
     })
     return {
       state,
       modalOpen() {
-        vaultsService.getByAccount()
         keepsService.getOne(props.keepProp.id)
         $('#modal' + props.keepProp.id).modal('show')
+      },
+      closeModal() {
+        $('#modal' + props.keepProp.id).modal('hide')
       }
     }
   }
