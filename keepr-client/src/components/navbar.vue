@@ -28,8 +28,8 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'Profile', params: {id: account.id} }" class="nav-link">
-            Profile
+          <router-link :to="{ name: 'MyProfile', params: {id: account.id} }" class="nav-link">
+            My Profile
           </router-link>
         </li>
       </ul>

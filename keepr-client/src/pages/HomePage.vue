@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-5">
       <div class="card-columns mx-5">
         <KeepsComponent v-for="k in state.keeps" :key="k.id" :keep-prop="k" />
       </div>

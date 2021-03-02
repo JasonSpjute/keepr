@@ -3,7 +3,7 @@
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
-        <div class="row text-white toTheBottom">
+        <div class="row text-white to-the-bottom mx-1">
           <div class="col-10">
             <h1 class="card-title">
               {{ keepProp.name }}
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <hr>
-              <div class="toTheBottom row d-flex">
+              <div class="to-the-bottom mb-3 mr-3 row d-flex">
                 <div class="col text-left">
                   <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle"
@@ -69,8 +69,8 @@
                   <i class="fas fa-trash text-danger"></i>
                 </div>
                 <div class="col text-right" v-if="state.keep.creator">
-                  <img :src="state.keep.creator.picture" class="creatorPic" alt="">
-                  <p class="namePic">
+                  <img :src="state.keep.creator.picture" class="creator-pic" alt="">
+                  <p class="name-pic">
                     &nbsp; {{ state.keep.creator.name }}
                   </p>
                 </div>
@@ -118,19 +118,19 @@ export default {
 .round-pic{
   border-radius: 25px;
 }
-.creatorPic{
+.creator-pic{
   max-width: 2rem;
   border-radius: 5px;
 }
-.namePic{
+.name-pic{
   display: inline;
 }
 
-.toTheBottom{
+.to-the-bottom{
 position: absolute;
-left: 1rem;
-right: 1rem;
-bottom: 1rem;
+left: 0;
+right: 0;
+bottom: 0;
 }
 
 </style>

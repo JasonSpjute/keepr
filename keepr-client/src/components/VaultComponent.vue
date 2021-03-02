@@ -1,12 +1,9 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <div class="card-title">
+  <div class="card grey vault-card">
+    <div class="card-body text-white">
+      <h1>
         {{ vaultProp.name }}
-      </div>
-      <div class="card-text">
-        {{ vaultProp.description }}
-      </div>
+      </h1>
     </div>
   </div>
 </template>
@@ -21,3 +18,18 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.grey{
+  background-color: grey
+}
+.vault-card{
+  // height: 17rem;
+  border-radius: 25px;
+  padding-top: 40%;
+  width: 100%
+}
+.to-the-bottom{
+position: absolute;
+bottom: 0;
+}
+</style>

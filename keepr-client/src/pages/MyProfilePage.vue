@@ -37,20 +37,18 @@ import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
 import { profilesService } from '../services/ProfilesService'
-import { vaultsService } from '../services/VaultsService'
 import { keepsService } from '../services/KeepsService'
 export default {
-  name: 'ProfilePage',
+  name: 'MyProfilePage',
   setup() {
     const route = useRoute()
     const state = reactive({
       profile: computed(() => AppState.profile),
-      keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults)
+      vaults: computed(() => AppState.myVaults),
+      keeps: computed(() => AppState.keeps)
     })
     onMounted(() => {
       profilesService.getProfile(route.params.id)
-      vaultsService.getByProfileId(route.params.id)
       keepsService.getByProfileId(route.params.id)
     })
     return {
@@ -61,14 +59,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-deck{
-    column-count: 2;
-    @media (min-width: 992px){
-      column-count: 6;
-    }
-}
+
 .card-columns {
     column-count: 2;
+    @media (min-width: 786px){
+    column-count: 4;
+    }
     @media (min-width: 992px){
       column-count: 6;
     }
