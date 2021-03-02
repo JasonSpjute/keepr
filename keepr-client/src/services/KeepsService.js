@@ -2,6 +2,11 @@ import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
 class KeepsService {
+  async createKeep(body) {
+    const res = await api.post('api/keeps', body)
+    AppState.keeps.push(res.data)
+  }
+
   async getKeeps() {
     const res = await api.get('api/keeps')
     AppState.keeps = res.data

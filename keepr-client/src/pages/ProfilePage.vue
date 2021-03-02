@@ -10,7 +10,7 @@
         <h3>Keeps: {{ state.keeps.length }}</h3>
       </div>
     </div>
-    <div class="row m-3">
+    <div class="row mt-5 mb-3">
       <div class="col">
         <h2>Vaults</h2>
       </div>
