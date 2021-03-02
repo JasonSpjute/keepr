@@ -52,8 +52,8 @@ namespace keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("Vaults")]
-        public async Task<ActionResult<Vault>> GetVaultsByAccountId()
+        [HttpGet("vaults")]
+        public async Task<ActionResult<IEnumerable<Vault>>> GetVaultsByAccountId()
         {
             try
             {

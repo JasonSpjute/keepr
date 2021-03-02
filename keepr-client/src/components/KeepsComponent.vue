@@ -3,16 +3,19 @@
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
-        <h4 class="card-title">
-          {{ keepProp.name }}
-        </h4>
-        <p class="card-text">
-          {{ keepProp.description }}
-        </p>
-        <a href="#" class="btn btn-primary">See Profile</a>
+        <div class="row text-white toTheBottom">
+          <div class="col">
+            <h1 class="card-title">
+              {{ keepProp.name }}
+            </h1>
+          </div>
+          <div class="col text-right mr-3">
+            <i class="far fa-user fa-3x"></i>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="modal-fixed-footer modal fade"
+    <div class="modal fade"
          :id="'modal' + keepProp.id"
          tabindex="-1"
          role="dialog"
@@ -22,15 +25,15 @@
       <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
           <div class="row px-3">
-            <div class="col-6 py-3 round">
+            <div class="col-12 col-lg-6 py-3 round">
               <img :src="state.keep.img" class="img-fluid rounded" alt="">
             </div>
-            <div class="col-6 py-1">
+            <div class="col-12 col-lg-6 py-1">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="row text-success">
-                <div class="col text-center mt-4">
+                <div class="col text-center mt-4 ml-5">
                   <p><span><i class="fas fa-eye"></i> {{ state.keep.views }} &nbsp; &nbsp; &nbsp; <b>K</b> {{ state.keep.keeps }}</span> </p>
                 </div>
               </div>
@@ -44,7 +47,8 @@
                   <p>{{ state.keep.description }}</p>
                 </div>
               </div>
-              <div class="modal-footer">
+              <hr>
+              <div class="toTheBottom row d-flex">
                 <div class="col text-left">
                   <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle"
@@ -54,17 +58,21 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                     >
-                      Dropdown button
+                      Add to Vault
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      <VaultDropdownComponent v-for="v in state.vaults" :key="v.id" :vault-prop="v" />
                     </div>
                   </div>
                 </div>
+                <div class="col-1 text-center" v-if="state.user.id == state.keep.creatorId">
+                  <i class="fas fa-trash text-danger"></i>
+                </div>
                 <div class="col text-right" v-if="state.keep.creator">
-                  <h6>{{ state.keep.creator.name }}</h6>
+                  <img :src="state.keep.creator.picture" class="creatorPic" alt="">
+                  <p class="namePic">
+                    &nbsp; {{ state.keep.creator.name }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -79,6 +87,7 @@ import $ from 'jquery'
 import { keepsService } from '../services/KeepsService'
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'KeepsComponent',
   props: {
@@ -86,11 +95,14 @@ export default {
   },
   setup(props) {
     const state = reactive({
-      keep: computed(() => AppState.activeKeep)
+      keep: computed(() => AppState.activeKeep),
+      user: computed(() => AppState.account),
+      vaults: computed(() => AppState.vaults)
     })
     return {
       state,
       modalOpen() {
+        vaultsService.getByAccountId()
         keepsService.getOne(props.keepProp.id)
         $('#modal' + props.keepProp.id).modal('show')
       }
@@ -106,4 +118,19 @@ export default {
 .round-pic{
   border-radius: 25px;
 }
+.creatorPic{
+  max-width: 2rem;
+  border-radius: 5px;
+}
+.namePic{
+  display: inline;
+}
+
+.toTheBottom{
+position: absolute;
+left: 1rem;
+right: 1rem;
+bottom: 1rem;
+}
+
 </style>
