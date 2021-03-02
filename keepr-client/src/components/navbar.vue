@@ -28,8 +28,8 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
+          <router-link :to="{ name: 'Profile', params: {id: account.id} }" class="nav-link">
+            Profile
           </router-link>
         </li>
       </ul>
@@ -62,7 +62,7 @@
           >
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
-                Account
+                Profile
               </div>
             </router-link>
             <div
@@ -91,6 +91,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },

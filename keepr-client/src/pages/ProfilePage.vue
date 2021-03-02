@@ -1,23 +1,57 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-2">
-        <img :src="state.user.picture" class="img-fluid" alt="">
+  <div class="container-fluid">
+    <div class="row mt-5">
+      <div class="col-2 text-right">
+        <img :src="state.profile.picture" class="img-fluid" alt="">
       </div>
       <div class="col">
-        <h1>{{ state.user.name }}</h1>
+        <h1>{{ state.profile.name }}</h1>
+        <h3>Vaults: {{ state.vaults.length }}</h3>
+        <h3>Keeps: {{ state.keeps.length }}</h3>
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col">
+        <h2>Vaults</h2>
+      </div>
+    </div>
+    <div class="row mx-3">
+      <div class="card-columns">
+        <VaultComponent v-for="v in state.vaults" :key="v.id" :vault-prop="v" />
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col">
+        <h2>Keeps</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card-columns mx-5">
+        <KeepsComponent v-for="k in state.keeps" :key="k.id" :keep-prop="k" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { useRoute } from 'vue-router'
+import { profilesService } from '../services/ProfilesService'
+import { vaultsService } from '../services/VaultsService'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'ProfilePage',
   setup() {
+    const route = useRoute()
     const state = reactive({
-      user: computed(() => AppState.profile)
+      profile: computed(() => AppState.profile),
+      vaults: computed(() => AppState.vaults),
+      keeps: computed(() => AppState.keeps)
+    })
+    onMounted(() => {
+      profilesService.getProfile(route.params.id)
+      vaultsService.getByProfileId(route.params.id)
+      keepsService.getByProfileId(route.params.id)
     })
     return {
       state
@@ -25,3 +59,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.card-deck{
+    column-count: 2;
+    @media (min-width: 992px){
+      column-count: 6;
+    }
+}
+.card-columns {
+    column-count: 2;
+    @media (min-width: 992px){
+      column-count: 6;
+    }
+}
+</style>

@@ -4,12 +4,12 @@
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
         <div class="row text-white toTheBottom">
-          <div class="col">
+          <div class="col-10">
             <h1 class="card-title">
               {{ keepProp.name }}
             </h1>
           </div>
-          <div class="col text-right mr-3">
+          <div class="col-1 text-right mr-3">
             <i class="far fa-user fa-3x"></i>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default {
     return {
       state,
       modalOpen() {
-        vaultsService.getByAccountId()
+        vaultsService.getByAccount()
         keepsService.getOne(props.keepProp.id)
         $('#modal' + props.keepProp.id).modal('show')
       }

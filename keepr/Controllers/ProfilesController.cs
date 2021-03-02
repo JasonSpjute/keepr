@@ -47,7 +47,7 @@ namespace keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpGet("{id}/Vaults")]
+        [HttpGet("{id}/vaults")]
         public async Task<ActionResult<Vault>> GetVaultsByProfileId(string id)
         {
             try
