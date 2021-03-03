@@ -3,7 +3,7 @@
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
-        <div class="row" v-if="vaultPage">
+        <div class="row" v-if="vaultPage && state.user.id == keepProp.creatorId">
           <div class="col">
             <i class="fas fa-ban fa-2x text-danger" @click="removeFromVault"></i>
           </div>
@@ -100,6 +100,7 @@ import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import swal from 'sweetalert'
 import { logger } from '../utils/Logger'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 export default {
   name: 'KeepsComponent',
   props: {
@@ -142,6 +143,17 @@ export default {
               }
             }
           })
+      },
+      removeFromVault() {
+        event.stopPropagation()
+        try {
+          vaultKeepsService.delete(props.keepProp.vaultKeepId, props.keepProp.id)
+          swal('This Keep has been removed from this Vault', {
+            icon: 'success'
+          })
+        } catch (error) {
+          logger.log(error)
+        }
       }
     }
   }
