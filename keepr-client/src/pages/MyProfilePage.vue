@@ -54,7 +54,7 @@
                 <input type="string" class="form-control" id="vaultDescription" placeholder="Enter Description">
               </div>
               <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="privacyCheck">
+                <input type="checkbox" class="form-check-input" id="privacyCheck" v-model="state.newVault.isPrivate">
                 <label class="form-check-label" for="privacyCheck">Private</label>
                 <small id="emailHelp" class="form-text text-muted">Check this box if you don't want anyone else to see your vault.</small>
               </div>
