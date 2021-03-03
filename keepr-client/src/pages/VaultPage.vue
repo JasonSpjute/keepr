@@ -1,8 +1,25 @@
 <template>
-  <div class="containter">
-    <div class="row ml-5 mt-5">
+  <div class="container-fluid">
+    <div class="row mx-5 mt-5">
       <div class="col">
-        <h1>{{ state.vault.name }}</h1>
+        <h1 class="title-trash">
+          {{ state.vault.name }} &nbsp;
+        </h1>
+        <i class="fas fa-trash text-danger fa-lg" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
+      </div>
+      <div class="col text-right">
+        <div v-if="state.vault.isPrivate">
+          <h4>This Vault is Private</h4>
+          <button class="btn btn-primary">
+            Make it Public
+          </button>
+        </div>
+        <div v-if="!state.vault.isPrivate">
+          <h4>This Vault is Public</h4>
+          <button class="btn btn-primary">
+            Make it Private
+          </button>
+        </div>
       </div>
     </div>
     <div class="row ml-5">
@@ -20,13 +37,17 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
+import { logger } from '../utils/Logger'
+import swal from 'sweetalert'
+
 export default {
   name: 'VaultPage',
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const state = reactive({
       vault: computed(() => AppState.currentVault),
       account: computed(() => AppState.account),
@@ -37,10 +58,33 @@ export default {
       keepsService.getByVaultId(route.params.id)
     })
     return {
-      state
+      state,
+      deleteVault() {
+        swal({
+          title: 'Are you sure?',
+          text: 'This is cannot be undone!',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              try {
+                vaultsService.delete(route.params.id)
+                swal('This Vault has been Deleted', {
+                  icon: 'success'
+                })
+                router.push({ name: 'MyProfile', params: { id: state.account.id } })
+              } catch (error) {
+                logger.log(error)
+              }
+            }
+          })
+      }
     }
   }
 }
+
 </script>
 <style lang="scss" scoped>
 .card-columns {
@@ -48,5 +92,8 @@ export default {
     @media (min-width: 992px){
       column-count: 4;
     }
+}
+.title-trash {
+  display: inline;
 }
 </style>

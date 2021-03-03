@@ -128,9 +128,7 @@ export default {
       profile: computed(() => AppState.profile),
       vaults: computed(() => AppState.myVaults),
       keeps: computed(() => AppState.keeps),
-      vaultForm: false,
       newVault: {},
-      keepForm: false,
       newKeep: {}
     })
     onMounted(() => {

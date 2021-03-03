@@ -4,6 +4,7 @@
       class="card grey vault-card"
     >
       <div class="card-body text-white">
+        <i class="fas fa-lock" v-if="vaultProp.isPrivate">&nbsp;private</i>
         <h1>
           {{ vaultProp.name }}
         </h1>
