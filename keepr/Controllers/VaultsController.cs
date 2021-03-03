@@ -91,11 +91,12 @@ namespace keepr.Controllers
             }
         }
         [HttpGet("{id}/keeps")]
-        public ActionResult<Vault> GetKeeps(int id)
+        public async Task<ActionResult<Vault>> GetKeeps(int id)
         {
             try
             {
-                return Ok(_ks.GetKeepsByVaultId(id));
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                return Ok(_ks.GetKeepsByVaultId(id, userInfo.Id));
             }
             catch (Exception e)
             {

@@ -2,10 +2,10 @@
   <div class="container-fluid">
     <div class="row mx-5 mt-5">
       <div class="col">
-        <h1 class="title-trash">
+        <h1 class="title-trash" v-if="state.vault">
           {{ state.vault.name }} &nbsp;
         </h1>
-        <i class="fas fa-trash text-danger fa-lg point" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
+        <i class="fas fa-trash text-danger fa-lg point" title="Delete Vault" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
       </div>
       <div class="col text-right" v-if="state.account.id == state.vault.creatorId">
         <div v-if="state.vault.isPrivate">

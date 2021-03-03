@@ -9,9 +9,11 @@ namespace keepr.Services
     public class KeepsService
     {
         private readonly KeepsRepository _kr;
-        public KeepsService(KeepsRepository kr)
+        private readonly VaultsRepository _vr;
+        public KeepsService(KeepsRepository kr, VaultsRepository vr)
         {
             _kr = kr;
+            _vr = vr;
         }
         public IEnumerable<Keep> GetAll()
         {
@@ -65,9 +67,17 @@ namespace keepr.Services
             return _kr.GetByCreatorId(id);
         }
 
-        internal IEnumerable<Keep> GetKeepsByVaultId(int id)
+        internal IEnumerable<Keep> GetKeepsByVaultId(int id, string userId)
         {
-            return _kr.GetByVaultId(id);
+            Vault vault = _vr.Get(id);
+            if (vault.CreatorId == userId)
+            {
+                return _kr.GetByVaultId(id);
+            }
+            else
+            {
+                throw new Exception("This vault is Private");
+            }
         }
     }
 }
