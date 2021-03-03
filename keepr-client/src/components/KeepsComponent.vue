@@ -3,6 +3,11 @@
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
+        <div class="row" v-if="vaultPage">
+          <div class="col">
+            <i class="fas fa-ban fa-2x text-danger" @click="removeFromVault"></i>
+          </div>
+        </div>
         <div class="row text-white to-the-bottom mx-1">
           <div class="col-10">
             <h1 class="card-title">
@@ -66,7 +71,7 @@
                   </div>
                 </div>
                 <div class="col-1 text-center" v-if="state.user.id == state.keep.creatorId">
-                  <i class="fas fa-trash text-danger"></i>
+                  <i class="fas fa-trash text-danger point" @click="deleteKeep"></i>
                 </div>
                 <div class="col text-right" v-if="state.keep.creator">
                   <router-link :to="{ name: 'Profile', params: {id: keepProp.creatorId} }" @click="closeModal()">
@@ -93,10 +98,13 @@ import $ from 'jquery'
 import { keepsService } from '../services/KeepsService'
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
+import swal from 'sweetalert'
+import { logger } from '../utils/Logger'
 export default {
   name: 'KeepsComponent',
   props: {
-    keepProp: { type: Object, required: true }
+    keepProp: { type: Object, required: true },
+    vaultPage: { type: Boolean, required: false }
   },
   setup(props) {
     const state = reactive({
@@ -112,6 +120,28 @@ export default {
       },
       closeModal() {
         $('#modal' + props.keepProp.id).modal('hide')
+      },
+      deleteKeep() {
+        swal({
+          title: 'Are you sure?',
+          text: 'This is cannot be undone!',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              try {
+                keepsService.delete(state.keep.id)
+                swal('This Keep has been Deleted', {
+                  icon: 'success'
+                })
+                $('#modal' + props.keepProp.id).modal('hide')
+              } catch (error) {
+                logger.log(error)
+              }
+            }
+          })
       }
     }
   }
@@ -138,6 +168,9 @@ position: absolute;
 left: 0;
 right: 0;
 bottom: 0;
+}
+.point{
+  cursor: pointer;
 }
 
 </style>

@@ -22,6 +22,12 @@ class VaultsService {
     AppState.vaults = res.data
   }
 
+  async edit(body, id) {
+    await api.put('api/vaults/' + id, body)
+    this.getOne(id)
+    this.getByAccount()
+  }
+
   async delete(id) {
     await api.delete('api/vaults/' + id)
     this.getByAccount()

@@ -5,18 +5,18 @@
         <h1 class="title-trash">
           {{ state.vault.name }} &nbsp;
         </h1>
-        <i class="fas fa-trash text-danger fa-lg" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
+        <i class="fas fa-trash text-danger fa-lg point" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
       </div>
       <div class="col text-right">
         <div v-if="state.vault.isPrivate">
           <h4>This Vault is Private</h4>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary" @click="makePublic">
             Make it Public
           </button>
         </div>
         <div v-if="!state.vault.isPrivate">
           <h4>This Vault is Public</h4>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary" @click="makePrivate">
             Make it Private
           </button>
         </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="row mt-5">
       <div class="card-columns mx-5">
-        <KeepsComponent v-for="k in state.keeps" :key="k.id" :keep-prop="k" />
+        <KeepsComponent v-for="k in state.keeps" :key="k.id" :keep-prop="k" :vault-page="state.vaultPage" />
       </div>
     </div>
   </div>
@@ -51,7 +51,8 @@ export default {
     const state = reactive({
       vault: computed(() => AppState.currentVault),
       account: computed(() => AppState.account),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      vaultPage: true
     })
     onMounted(() => {
       vaultsService.getOne(route.params.id)
@@ -80,6 +81,28 @@ export default {
               }
             }
           })
+      },
+      makePrivate() {
+        const body = { isPrivate: true }
+        try {
+          vaultsService.edit(body, route.params.id)
+          swal('This Vault is now Private', {
+            icon: 'success'
+          })
+        } catch (error) {
+          logger.log(error)
+        }
+      },
+      makePublic() {
+        const body = { isPrivate: false }
+        try {
+          vaultsService.edit(body, route.params.id)
+          swal('This Vault is now Private', {
+            icon: 'success'
+          })
+        } catch (error) {
+          logger.log(error)
+        }
       }
     }
   }
@@ -95,5 +118,8 @@ export default {
 }
 .title-trash {
   display: inline;
+}
+.point {
+  cursor: pointer;
 }
 </style>
