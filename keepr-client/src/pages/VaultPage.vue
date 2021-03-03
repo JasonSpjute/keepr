@@ -7,7 +7,7 @@
         </h1>
         <i class="fas fa-trash text-danger fa-lg point" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
       </div>
-      <div class="col text-right">
+      <div class="col text-right" v-if="state.account.id == state.vault.creatorId">
         <div v-if="state.vault.isPrivate">
           <h4>This Vault is Private</h4>
           <button class="btn btn-primary" @click="makePublic">

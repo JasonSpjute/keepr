@@ -106,7 +106,7 @@ export default {
   props: {
     keepProp: { type: Object, required: true },
     vaultPage: { type: Boolean, required: false },
-    vaultId: { type: Number, required: false, default: 0 }
+    vaultId: { type: Number, default: 0 }
   },
   setup(props) {
     const state = reactive({
