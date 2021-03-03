@@ -1,36 +1,41 @@
 <template>
   <div class="container-fluid">
-    <div class="row mx-5 mt-5">
-      <div class="col">
-        <h1 class="title-trash">
-          {{ state.vault.name }} &nbsp;
-        </h1>
-        <i class="fas fa-trash text-danger fa-lg point" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
-      </div>
-      <div class="col text-right" v-if="state.account.id == state.vault.creatorId">
-        <div v-if="state.vault.isPrivate">
-          <h4>This Vault is Private</h4>
-          <button class="btn btn-primary" @click="makePublic">
-            Make it Public
-          </button>
+    <div v-if="state.vault.isPrivate == false || state.account.id == state.vault.creatorId">
+      <div class="row mx-5 mt-5">
+        <div class="col">
+          <h1 class="title-trash">
+            {{ state.vault.name }} &nbsp;
+          </h1>
+          <i class="fas fa-trash text-danger fa-lg point" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
         </div>
-        <div v-if="!state.vault.isPrivate">
-          <h4>This Vault is Public</h4>
-          <button class="btn btn-primary" @click="makePrivate">
-            Make it Private
-          </button>
+        <div class="col text-right" v-if="state.account.id == state.vault.creatorId">
+          <div v-if="state.vault.isPrivate">
+            <h4>This Vault is Private</h4>
+            <button class="btn btn-primary" @click="makePublic">
+              Make it Public
+            </button>
+          </div>
+          <div v-if="!state.vault.isPrivate">
+            <h4>This Vault is Public</h4>
+            <button class="btn btn-primary" @click="makePrivate">
+              Make it Private
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div class="col">
+          <h4>Keeps: {{ state.keeps.length }}</h4>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="card-columns mx-5">
+          <KeepsComponent v-for="k in state.keeps" :key="k.index" :keep-prop="k" :vault-page="state.vaultPage" :vault-id="state.vault.id" />
         </div>
       </div>
     </div>
-    <div class="row ml-5">
-      <div class="col">
-        <h4>Keeps: {{ state.keeps.length }}</h4>
-      </div>
-    </div>
-    <div class="row mt-5">
-      <div class="card-columns mx-5">
-        <KeepsComponent v-for="k in state.keeps" :key="k.index" :keep-prop="k" :vault-page="state.vaultPage" :vault-id="state.vault.id" />
-      </div>
+    <div v-else>
+      <h1>This Vault is Private</h1>
     </div>
   </div>
 </template>
