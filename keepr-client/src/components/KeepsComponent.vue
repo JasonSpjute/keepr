@@ -71,7 +71,7 @@
                   </div>
                 </div>
                 <div class="col-1 text-center" v-if="state.user.id == state.keep.creatorId">
-                  <i class="fas fa-trash text-danger point" @click="deleteKeep"></i>
+                  <i class="fas fa-trash text-danger point" title="Delete this Keep" @click="deleteKeep"></i>
                 </div>
                 <div class="col text-right" v-if="state.keep.creator">
                   <router-link :to="{ name: 'Profile', params: {id: keepProp.creatorId} }" @click="closeModal()">

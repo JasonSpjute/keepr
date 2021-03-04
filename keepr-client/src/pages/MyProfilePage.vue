@@ -13,7 +13,7 @@
       </div>
       <div class="row mt-5 mb-3 mx-5">
         <div class="col">
-          <h2><i class="fa fa-plus text-success" @click="openVaultModal()" aria-hidden="true"></i> &nbsp; Vaults:</h2>
+          <h2><i class="fa fa-plus text-success point" title="Create a New Vault" @click="openVaultModal()" aria-hidden="true"></i> &nbsp; Vaults:</h2>
         </div>
       </div>
       <div class="row mx-5">
@@ -23,7 +23,7 @@
       </div>
       <div class="row my-3 mx-5">
         <div class="col">
-          <h2><i class="fa fa-plus text-success" @click="openKeepModal" aria-hidden="true"></i> &nbsp; Keeps:</h2>
+          <h2><i class="fa fa-plus text-success point" title="Create a New Keep" @click="openKeepModal" aria-hidden="true"></i> &nbsp; Keeps:</h2>
         </div>
       </div>
       <div class="row">
@@ -176,5 +176,8 @@ export default {
     @media (min-width: 992px){
       column-count: 6;
     }
+}
+.point{
+  cursor: pointer;
 }
 </style>
