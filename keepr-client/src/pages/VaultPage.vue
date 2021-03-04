@@ -52,10 +52,16 @@ export default {
       vault: computed(() => AppState.currentVault),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
-      vaultPage: true
+      vaultPage: true,
+      private: false
     })
     onMounted(() => {
-      vaultsService.getOne(route.params.id)
+      try {
+        vaultsService.getOne(route.params.id)
+      } catch (error) {
+        state.keeps = {}
+        state.private = true
+      }
       keepsService.getByVaultId(route.params.id)
     })
     return {
