@@ -70,18 +70,12 @@ namespace keepr.Services
         internal IEnumerable<Keep> GetKeepsByVaultId(int id, string userId)
         {
             Vault vault = _vr.Get(id);
-            if (vault.CreatorId == userId)
-            {
-                return _kr.GetByVaultId(id);
-            }
-            if (vault.IsPrivate == false)
-            {
-                return _kr.GetByVaultId(id);
-            }
-            else
+            if (vault.CreatorId != userId && vault.IsPrivate == true)
             {
                 throw new Exception("This vault is Private");
             }
+            return _kr.GetByVaultId(id);
+
         }
     }
 }

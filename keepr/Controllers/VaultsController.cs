@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keepr.Models;
@@ -96,7 +97,18 @@ namespace keepr.Controllers
             try
             {
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-                return Ok(_ks.GetKeepsByVaultId(id, userInfo.Id));
+                if (userInfo == null)
+                {
+                    string userId = "nope";
+                    IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id, userId);
+                    return Ok(keeps);
+                }
+                else
+                {
+                    string userId = userInfo.Id;
+                    IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id, userId);
+                    return Ok(keeps);
+                }
             }
             catch (Exception e)
             {

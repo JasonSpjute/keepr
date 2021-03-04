@@ -58,6 +58,7 @@ export default {
       vaultPage: true
     })
     onMounted(() => {
+      keepsService.clearKeeps()
       vaultsService.getOne(route.params.id)
       keepsService.getByVaultId(route.params.id)
     })

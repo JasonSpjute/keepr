@@ -31,6 +31,10 @@ class KeepsService {
     await api.delete('api/keeps/' + id)
     this.getKeeps()
   }
+
+  clearKeeps() {
+    AppState.keeps = {}
+  }
 }
 
 export const keepsService = new KeepsService()
