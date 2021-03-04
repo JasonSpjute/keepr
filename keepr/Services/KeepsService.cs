@@ -74,6 +74,10 @@ namespace keepr.Services
             {
                 return _kr.GetByVaultId(id);
             }
+            if (vault.IsPrivate == false)
+            {
+                return _kr.GetByVaultId(id);
+            }
             else
             {
                 throw new Exception("This vault is Private");

@@ -5,7 +5,9 @@
         <h1 class="title-trash" v-if="state.vault">
           {{ state.vault.name }} &nbsp;
         </h1>
-        <i class="fas fa-trash text-danger fa-lg point" title="Delete Vault" @click="deleteVault" v-if="state.account.id == state.vault.creatorId"></i>
+        <div class="title-trash" v-if="state.vault.creatorId == state.account.id">
+          <i class="fas fa-trash text-danger fa-lg point" title="Delete Vault" @click="deleteVault"></i>
+        </div>
       </div>
       <div class="col text-right" v-if="state.account.id == state.vault.creatorId">
         <div v-if="state.vault.isPrivate">
@@ -52,16 +54,11 @@ export default {
       vault: computed(() => AppState.currentVault),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
-      vaultPage: true,
-      private: false
+      user: computed(() => AppState.user),
+      vaultPage: true
     })
     onMounted(() => {
-      try {
-        vaultsService.getOne(route.params.id)
-      } catch (error) {
-        state.keeps = {}
-        state.private = true
-      }
+      vaultsService.getOne(route.params.id)
       keepsService.getByVaultId(route.params.id)
     })
     return {

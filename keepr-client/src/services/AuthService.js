@@ -5,7 +5,7 @@ import router from '../router'
 import { setBearer } from './AxiosService'
 import { accountService } from './AccountService'
 import { vaultsService } from './VaultsService'
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 
 export const AuthService = initialize({
   domain,
@@ -21,11 +21,11 @@ export const AuthService = initialize({
 })
 
 AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
-  const route = useRoute()
+  // const route = useRoute()
   setBearer(AuthService.bearer)
   await accountService.getAccount()
   AppState.user = AuthService.user
   // NOTE if there is something you want to do once the user is authenticated, place that here
   vaultsService.getByAccount()
-  vaultsService.getOne(route.params.id)
+  // vaultsService.getOne(route.params.id)
 })
