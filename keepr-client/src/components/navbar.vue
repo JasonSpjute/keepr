@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-keepr">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img
           alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
+          src="../assets/img/Keepr.png"
+          height="55"
         />
       </div>
     </router-link>
@@ -124,5 +124,8 @@ a:hover {
 }
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
+}
+.bg-keepr{
+  background-color: #55efc4;
 }
 </style>

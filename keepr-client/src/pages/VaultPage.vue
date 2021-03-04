@@ -1,5 +1,8 @@
 <template>
   <div class="container-fluid">
+    <div>
+      <h1>Can you see me</h1>
+    </div>
     <div class="row mx-5 mt-5">
       <div class="col">
         <h1 class="title-trash" v-if="state.vault">
