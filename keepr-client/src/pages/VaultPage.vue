@@ -31,7 +31,13 @@
     </div>
     <div class="row mt-5">
       <div class="card-columns mx-5">
-        <KeepsComponent v-for="k in state.keeps" :key="k.index" :keep-prop="k" :vault-page="state.vaultPage" :vault-id="state.vault.id" />
+        <KeepsComponent v-for="k in state.keeps"
+                        :key="k.index"
+                        :keep-prop="k"
+                        :vault-page="state.vaultPage"
+                        :vault-id="state.vault.id"
+                        :creator-id="state.vault.creatorId"
+        />
       </div>
     </div>
   </div>

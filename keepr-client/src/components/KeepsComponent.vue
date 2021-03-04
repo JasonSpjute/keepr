@@ -3,7 +3,7 @@
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
       <div class="card-img-overlay">
-        <div class="row" v-if="vaultPage">
+        <div class="row" v-if="vaultPage && state.user.id == creatorId">
           <div class="col">
             <i class="fas fa-ban fa-2x text-danger" @click="removeFromVault"></i>
           </div>
@@ -106,7 +106,8 @@ export default {
   props: {
     keepProp: { type: Object, required: true },
     vaultPage: { type: Boolean, required: false },
-    vaultId: { type: Number, default: 0 }
+    vaultId: { type: Number, default: 0 },
+    creatorId: { type: String, required: false, default: '' }
   },
   setup(props) {
     const state = reactive({
