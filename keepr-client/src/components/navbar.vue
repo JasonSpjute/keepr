@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-keepr">
+  <nav class="navbar navbar-expand-lg navbar-light bg-keepr">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img
@@ -33,6 +33,12 @@
           </router-link>
         </li>
       </ul>
+      <form class="form-inline mx-auto">
+        <input class="form-control-lg mr-sm-2 bg-light" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
       <span class="navbar-text">
         <button
           class="btn btn-outline-primary text-uppercase"
@@ -41,7 +47,6 @@
         >
           Login
         </button>
-
         <div class="dropdown" v-else>
           <div
             class="dropdown-toggle"
