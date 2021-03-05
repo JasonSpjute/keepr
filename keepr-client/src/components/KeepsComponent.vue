@@ -2,7 +2,7 @@
   <div>
     <div class="card" @click="modalOpen()">
       <img class="card-img-top round-pic" :src="keepProp.img" alt="Card image">
-      <div class="card-img-overlay">
+      <div class="card-img-overlay keep-img">
         <div class="row" v-if="vaultPage && state.user.id == creatorId">
           <div class="col">
             <i class="fas fa-ban fa-2x text-danger" @click="removeFromVault"></i>
@@ -13,9 +13,6 @@
             <h1 class="card-title">
               {{ keepProp.name }}
             </h1>
-          </div>
-          <div class="col-1 text-right mr-3">
-            <i class="far fa-user fa-3x"></i>
           </div>
         </div>
       </div>
@@ -185,6 +182,10 @@ bottom: 0;
 }
 .point{
   cursor: pointer;
+}
+.keep-img{
+background: linear-gradient(180deg, rgba(226,226,226,0.0035364487591911242) 56%, rgba(42,42,42,0.5497549361541492) 100%);
+border-radius: 25px;
 }
 
 </style>

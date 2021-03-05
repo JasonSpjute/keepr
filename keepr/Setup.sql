@@ -65,4 +65,4 @@ use keepr71;
 --     ON DELETE CASCADE
 -- );
 
--- DELETE FROM vaultkeeps 
+-- DELETE FROM vaults
