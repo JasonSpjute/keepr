@@ -33,12 +33,12 @@
           </router-link>
         </li>
       </ul>
-      <form class="form-inline mx-auto">
+      <!-- <form class="form-inline mx-auto">
         <input class="form-control-lg mr-sm-2 bg-light" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
-      </form>
+      </form> -->
       <span class="navbar-text">
         <button
           class="btn btn-outline-primary text-uppercase"

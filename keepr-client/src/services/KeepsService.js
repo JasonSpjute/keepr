@@ -29,7 +29,11 @@ class KeepsService {
 
   async delete(id) {
     await api.delete('api/keeps/' + id)
-    this.getKeeps()
+    // this.getKeeps()
+    const keeps = AppState.keeps
+    const removeIndex = keeps.map(function(item) { return item.id }).indexOf(id)
+    keeps.splice(removeIndex, 1)
+    AppState.keeps = keeps
   }
 
   clearKeeps() {
